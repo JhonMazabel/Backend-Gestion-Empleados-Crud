@@ -65,7 +65,6 @@ class EmpleadoController extends AbstractController
         $this->entityManager->persist($empleado);
         $this->entityManager->flush();
 
-        // Enviamos el correo de bienvenida al usuario
         $this->emailService->sendWelcomeEmail($data['email'], $empleado->getNombre(), $empleado->getApellido());
 
 
@@ -87,13 +86,11 @@ class EmpleadoController extends AbstractController
      */
     public function list(): JsonResponse
     {
-        // Verificar si el usuario está autenticado
         $user = $this->getUser();
         if (!$user) {
             return new JsonResponse(['message' => 'No autorizado'], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        // Obtener todos los empleados registrados por el usuario
         $empleados = $this->entityManager->getRepository(Empleado::class)->findBy(['usuario' => $user]);
 
         $empleadosData = [];

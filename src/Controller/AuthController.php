@@ -18,7 +18,6 @@ class AuthController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): JsonResponse
     {
-        // Obtener los datos del JSON en la solicitud
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['email'], $data['password'])) {
